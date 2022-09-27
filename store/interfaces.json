@@ -1,0 +1,6 @@
+{
+  "bucketitem": {
+    "component": "BucketItem",
+    "composition": "children"
+  }
+}
