@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React from "react";
+import { Link } from "vtex.render-runtime";
 
 // Styles
 import styles from "./styles.css";
@@ -10,18 +11,21 @@ interface BucketItemProps {
   subtitle: string
   link: string
   altText: string
+  loadingPriority: boolean
   blockClass: string
 }
 
-const BucketItem: StorefrontFunctionComponent<BucketItemProps> = ({ desktopImage, mobileImage, title, subtitle, link, altText, blockClass }) => {
+const BucketItem: StorefrontFunctionComponent<BucketItemProps> = ({ desktopImage, mobileImage, title, subtitle, link, altText, loadingPriority, blockClass }) => {
 
   return (
-    <a href={link} className={`${styles.bucketContainer}--${blockClass}`}>
+    <Link href={link} className={`${styles.bucketContainer}--${blockClass}`}>
       <div className={`${styles.imageContainer}--${blockClass}`}>
         <img src={mobileImage}
           srcSet={`${desktopImage} 500w, ${mobileImage} 300w`}
           sizes="(min-width: 1026px) 500px, 300px"
-          loading="lazy"
+          loading={loadingPriority ? "eager" : "lazy"}
+          // @ts-expect-error
+          fetchPriority={loadingPriority ? "high" : "low"}
           width={350} height={350}
           alt={title || altText || ""}
           className={`${styles.image}--${blockClass}`} />
@@ -30,7 +34,7 @@ const BucketItem: StorefrontFunctionComponent<BucketItemProps> = ({ desktopImage
         {title && <div className={`${styles.title}--${blockClass}`}>{title}</div>}
         {subtitle && <div className={`${styles.subtitle}--${blockClass}`}>{subtitle}</div>}
       </div>
-    </a>
+    </Link>
   )
 }
 
@@ -73,6 +77,10 @@ BucketItem.schema = {
       type: "string",
       description: "Required | Relative or Absolute Path",
       widget: { "ui:widget": "textarea" }
+    },
+    loadingPriority: {
+      title: "Loading Priority",
+      type: "boolean"
     }
   }
 }

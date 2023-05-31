@@ -1,7 +1,7 @@
 {
   "vendor": "eriksbikeshop",
   "name": "bucketitem",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "title": "BucketItem",
   "description": "BucketItem component",
   "defaultLocale": "pt-BR",
