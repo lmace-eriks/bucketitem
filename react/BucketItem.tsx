@@ -4,6 +4,12 @@ import { Link } from "vtex.render-runtime";
 // Styles
 import styles from "./styles.css";
 
+declare module "react" {
+  interface ImgHTMLAttributes<T> extends HTMLAttributes<T> {
+    fetchPriority?: 'high' | 'low' | 'auto';
+  }
+}
+
 interface BucketItemProps {
   desktopImage: string
   mobileImage: string
@@ -24,15 +30,20 @@ const BucketItem: StorefrontFunctionComponent<BucketItemProps> = ({ desktopImage
           srcSet={`${desktopImage} 500w, ${mobileImage} 300w`}
           sizes="(min-width: 1026px) 500px, 300px"
           loading={loadingPriority ? "eager" : "lazy"}
-          // @ts-expect-error
           fetchPriority={loadingPriority ? "high" : "low"}
           width={350} height={350}
-          alt={title || altText || ""}
+          alt={altText || title || ""}
           className={`${styles.image}--${blockClass}`} />
       </div>
       <div className={`${styles.textContainer}--${blockClass}`}>
-        {title && <div className={`${styles.title}--${blockClass}`}>{title}</div>}
-        {subtitle && <div className={`${styles.subtitle}--${blockClass}`}>{subtitle}</div>}
+        {title &&
+          <div className={`${styles.title}--${blockClass}`}>
+            {title}
+          </div>}
+        {subtitle &&
+          <div className={`${styles.subtitle}--${blockClass}`}>
+            {subtitle}
+          </div>}
       </div>
     </Link>
   )
