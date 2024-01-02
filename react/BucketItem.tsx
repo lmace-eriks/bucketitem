@@ -18,13 +18,14 @@ interface BucketItemProps {
   link: string
   altText: string
   loadingPriority: boolean
+  linkAriaLabel: string
   blockClass: string
 }
 
-const BucketItem: StorefrontFunctionComponent<BucketItemProps> = ({ desktopImage, mobileImage, title, subtitle, link, altText, loadingPriority, blockClass }) => {
+const BucketItem: StorefrontFunctionComponent<BucketItemProps> = ({ desktopImage, mobileImage, title, subtitle, link, altText, loadingPriority, linkAriaLabel, blockClass }) => {
 
   return (
-    <Link href={link} className={`${styles.bucketContainer}--${blockClass}`}>
+    <Link href={link} aria-label={linkAriaLabel} className={`${styles.bucketContainer}--${blockClass}`}>
       <div className={`${styles.imageContainer}--${blockClass}`}>
         <img src={mobileImage}
           srcSet={`${desktopImage} 500w, ${mobileImage} 300w`}
@@ -87,6 +88,13 @@ BucketItem.schema = {
       title: "Link",
       type: "string",
       description: "Required | Relative or Absolute Path",
+      widget: { "ui:widget": "textarea" }
+    },
+    linkAriaLabel: {
+      title: "Link",
+      type: "string",
+      description: "Required if Title and Sub Title are blank.",
+      default: "",
       widget: { "ui:widget": "textarea" }
     },
     loadingPriority: {
