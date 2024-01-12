@@ -66,10 +66,11 @@ BucketItem.schema = {
       type: "string",
       widget: { "ui:widget": "image-uploader" }
     },
-    altText: {
-      title: "Alt Text",
+    linkAriaLabel: {
+      title: "Link Description for Screen Readers",
       type: "string",
       description: "Required if Title and Sub Title are blank.",
+      default: "",
       widget: { "ui:widget": "textarea" }
     },
     title: {
@@ -90,11 +91,10 @@ BucketItem.schema = {
       description: "Required | Relative or Absolute Path",
       widget: { "ui:widget": "textarea" }
     },
-    linkAriaLabel: {
-      title: "Link",
+    altText: {
+      title: "Image Alt Text",
       type: "string",
-      description: "Required if Title and Sub Title are blank.",
-      default: "",
+      description: "",
       widget: { "ui:widget": "textarea" }
     },
     loadingPriority: {
