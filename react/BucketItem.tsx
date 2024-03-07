@@ -23,9 +23,10 @@ interface BucketItemProps {
 }
 
 const BucketItem: StorefrontFunctionComponent<BucketItemProps> = ({ desktopImage, mobileImage, title, subtitle, link, altText, loadingPriority, linkAriaLabel, blockClass }) => {
+  const externalLink = link.includes("http");
 
-  return (
-    <Link to={link.includes("http") ? "" : link} href={link.includes("http") ? link : ""} aria-label={linkAriaLabel} className={`${styles.bucketContainer}--${blockClass}`}>
+  const Bucket = () => (
+    <>
       <div className={`${styles.imageContainer}--${blockClass}`}>
         <img src={mobileImage}
           srcSet={`${desktopImage} 500w, ${mobileImage} 300w`}
@@ -46,8 +47,22 @@ const BucketItem: StorefrontFunctionComponent<BucketItemProps> = ({ desktopImage
             {subtitle}
           </div>}
       </div>
-    </Link>
+    </>
   )
+
+  if (externalLink) {
+    return (
+      <Link href={link} aria-label={linkAriaLabel} className={`${styles.bucketContainer}--${blockClass}`}>
+        <Bucket />
+      </Link>
+    )
+  } else {
+    return (
+      <Link to={link} aria-label={linkAriaLabel} className={`${styles.bucketContainer}--${blockClass}`}>
+        <Bucket />
+      </Link>
+    )
+  }
 }
 
 BucketItem.schema = {
